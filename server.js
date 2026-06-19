@@ -138,9 +138,13 @@ app.get('/api/health', (_req, res) => {
 // Serve static files from the Vite build output
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// SPA fallback: all non-API routes serve index.html
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// SPA fallback: all non-API GET requests serve index.html
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  } else {
+    next();
+  }
 });
 
 // ============================================
