@@ -1,0 +1,123 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* ============================================
+   PULSE — Design System Tokens 
+   Lush Forest & Breezy Sky Aesthetic
+   ============================================ */
+
+@theme {
+  /* Typography */
+  --font-sans: 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
+  --font-heading: 'Fraunces', serif;
+  
+  /* Twin Color Scale — Maps CO₂ rate to hue */
+  --color-twin-healthy: #0ea5e9;      /* Sky blue — low emissions */
+  --color-twin-good: #10b981;         /* Emerald green — moderate */
+  --color-twin-warning: #f59e0b;      /* Amber — elevated */
+  --color-twin-danger: #f97316;       /* Orange — high */
+  --color-twin-critical: #ef4444;     /* Red — very high */
+}
+
+/* Define a custom nature theme directly */
+:root {
+  --p: 153 60% 45%;    /* Primary: Lush Green #2e8b57 */
+  --pc: 0 0% 100%;
+  --s: 199 89% 48%;    /* Secondary: Breezy Blue #0ea5e9 */
+  --sc: 0 0% 100%;
+  --a: 43 96% 56%;     /* Accent: Sunlight Yellow */
+  --ac: 0 0% 100%;
+  --n: 215 28% 17%;    /* Neutral: Dark slate */
+  --nc: 0 0% 100%;
+  --b1: 140 30% 98%;   /* Base 100: Very pale green-white */
+  --b2: 140 20% 95%;
+  --b3: 140 20% 90%;
+  --bc: 150 40% 15%;   /* Base Content: Deep forest green */
+  --in: 199 89% 48%;
+  --inc: 0 0% 100%;
+  --su: 150 80% 40%;
+  --suc: 0 0% 100%;
+  --wa: 43 96% 56%;
+  --wac: 0 0% 100%;
+  --er: 0 84% 60%;
+  --erc: 0 0% 100%;
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: oklch(var(--bc));
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Sunset Oasis & Lush Lagoon Paradise gradient */
+  background: linear-gradient(135deg, #FFDAB9 0%, #FFFACD 40%, #E0F2FE 70%, #40E0D0 100%);
+  background-attachment: fixed;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Glassmorphism utility for cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 100, 50, 0.05);
+}
+
+/* ============================================
+   Custom Twin Animations
+   ============================================ */
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.02); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
