@@ -14,11 +14,8 @@ RUN npm ci
 # Copy application source
 COPY . .
 
-# Provide a dummy API key during build if required by Vite
-# (Since we proxy through the server, we don't actually need it injected into Vite,
-# but we keep this ARG just in case the build script expects it).
-ARG VITE_GEMINI_API_KEY=""
-ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
+# We do not need VITE_GEMINI_API_KEY injected into Vite because the 
+# frontend calls our proxy at /api/extract instead of calling Gemini directly.
 
 # Build the Vite application (outputs to /dist)
 RUN npm run build
