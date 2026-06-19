@@ -147,8 +147,8 @@ app.get('*', (_req, res) => {
 // Start Server
 // ============================================
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌱 Pulse server running on port ${PORT}`);
-  console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`   Gemini API: ${process.env.GEMINI_API_KEY ? '✅ configured' : '❌ not configured (multimodal features disabled)'}`);
+  console.log(`   Environment: ${process.env.NODE_ENV || 'production'}`);
+  console.log(`   Gemini API: ${process.env.GEMINI_API_KEY ? '✅ configured' : '❌ not configured'}`);
 });
