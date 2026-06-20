@@ -95,10 +95,12 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
   const [quantity, setQuantity] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Reset quantity when preset changes
-  useEffect(() => {
-    if (selectedPreset) setQuantity(selectedPreset.defaultQty);
-  }, [selectedPreset]);
+  const handlePresetSelect = (preset: SubtypePreset | null) => {
+    setSelectedPreset(preset);
+    if (preset) {
+      setQuantity(preset.defaultQty);
+    }
+  };
 
   // Auto-dismiss toast
   useEffect(() => {
@@ -126,7 +128,7 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
 
     onLog(event);
     setToast(`${selectedPreset.emoji} ${selectedPreset.label} logged — ${co2} kg CO₂`);
-    setSelectedPreset(null);
+    handlePresetSelect(null);
   }, [selectedPreset, quantity, activeCategory, onLog]);
 
   const adjustQty = useCallback(
@@ -157,7 +159,7 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
               key={cat}
               onClick={() => {
                 setActiveCategory(cat);
-                setSelectedPreset(null);
+                handlePresetSelect(null);
               }}
               className={`
                 flex-1 flex items-center justify-center gap-1 py-2 px-1.5
@@ -184,7 +186,7 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
           return (
             <button
               key={preset.key}
-              onClick={() => setSelectedPreset(isSelected ? null : preset)}
+              onClick={() => handlePresetSelect(isSelected ? null : preset)}
               className={`
                 flex flex-col items-center gap-2 p-4 rounded-xl border
                 transition-all duration-150 cursor-pointer group
@@ -230,14 +232,14 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
                 {selectedPreset.label}
               </span>
             </div>
-            <button onClick={() => setSelectedPreset(null)} className="btn btn-ghost btn-sm btn-circle">
+            <button onClick={() => handlePresetSelect(null)} className="btn btn-ghost btn-sm btn-circle" aria-label="Cancel preset">
               <X size={16} />
             </button>
           </div>
 
           {/* Quantity Controls */}
           <div className="flex items-center gap-3">
-            <button onClick={() => adjustQty(-selectedPreset.step)} className="btn btn-circle btn-sm btn-outline" disabled={quantity <= selectedPreset.min}>
+            <button onClick={() => adjustQty(-selectedPreset.step)} className="btn btn-circle btn-sm btn-outline" disabled={quantity <= selectedPreset.min} aria-label="Decrease quantity">
               <Minus size={16} />
             </button>
 
@@ -261,7 +263,7 @@ const QuickLog: FC<QuickLogProps> = ({ onLog }) => {
               </span>
             </div>
 
-            <button onClick={() => adjustQty(selectedPreset.step)} className="btn btn-circle btn-sm btn-outline" disabled={quantity >= selectedPreset.max}>
+            <button onClick={() => adjustQty(selectedPreset.step)} className="btn btn-circle btn-sm btn-outline" disabled={quantity >= selectedPreset.max} aria-label="Increase quantity">
               <Plus size={16} />
             </button>
           </div>

@@ -214,7 +214,7 @@ const BranchLine = memo(({ branch, isHypo }: { branch: Branch3D, isHypo: boolean
   );
 });
 
-const TreeSystem = ({ baseline, hypothetical, rateOfChange }: any) => {
+const TreeSystem = ({ baseline, hypothetical, rateOfChange }: { baseline: Trajectory, hypothetical?: Trajectory | null, rateOfChange: number }) => {
   const { branches } = useMemo(() => buildOrganism3D(baseline, hypothetical), [baseline, hypothetical]);
   const groupRef = useRef<THREE.Group>(null);
   

@@ -34,6 +34,8 @@ export function HypotheticalPanel() {
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex items-center justify-between p-4 hover:bg-base-200 transition-colors"
+        aria-expanded={isExpanded}
+        aria-label="Toggle what if scenarios"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-secondary/20 text-secondary">

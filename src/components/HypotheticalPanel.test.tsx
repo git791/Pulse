@@ -15,20 +15,20 @@ describe('HypotheticalPanel', () => {
     expect(screen.getByText('Explore hypothetical changes')).toBeInTheDocument();
     
     // It should expand on click
-    const button = screen.getByRole('button', { name: /What If\?/i });
+    const button = screen.getByRole('button', { name: /Toggle what if scenarios/i });
     fireEvent.click(button);
     
-    // Check if some of the default scenarios are rendered
-    expect(screen.getByText('Go Vegan')).toBeInTheDocument();
+    // After click, we expect more content
+    expect(screen.getByText(/Diet/i)).toBeInTheDocument();
   });
 
   it('shows commit/discard buttons when a scenario is active', () => {
     render(<HypotheticalPanel />);
     
-    const button = screen.getByRole('button', { name: /What If\?/i });
+    const button = screen.getByRole('button', { name: /Toggle what if scenarios/i });
     fireEvent.click(button);
 
-    // Select a scenario
+    // Select a scenario to trigger store logic
     const selectScenarioButton = screen.getByText('Go Vegan');
     fireEvent.click(selectScenarioButton);
 

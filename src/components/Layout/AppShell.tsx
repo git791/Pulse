@@ -73,16 +73,16 @@ export function AppShell({ children, sidebar, capture }: AppShellProps) {
               {activityEvents.length}
             </div>
           )}
-          <button onClick={() => setShowSettings(true)} className="btn btn-ghost btn-sm btn-circle hidden md:flex" title="Settings">
-            <Settings size={16} />
+          <button onClick={() => setShowSettings(true)} className="btn btn-ghost btn-sm btn-circle hidden md:flex" title="Settings" aria-label="Settings">
+            <Settings size={16} aria-hidden="true" />
           </button>
-          <button onClick={resetAll} className="btn btn-ghost btn-sm btn-circle hidden md:flex" title="Reset all data">
-            <RotateCcw size={16} />
+          <button onClick={resetAll} className="btn btn-ghost btn-sm btn-circle hidden md:flex" title="Reset all data" aria-label="Reset all data">
+            <RotateCcw size={16} aria-hidden="true" />
           </button>
 
           {/* Mobile menu toggle */}
-          <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn btn-ghost btn-sm btn-circle md:hidden">
-            {showMobileMenu ? <X size={18} /> : <Menu size={18} />}
+          <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn btn-ghost btn-sm btn-circle md:hidden" aria-label="Toggle mobile menu" aria-expanded={showMobileMenu}>
+            {showMobileMenu ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
           </button>
         </div>
       </header>
@@ -205,8 +205,8 @@ function MobileOverlay({ children, onClose }: { children: React.ReactNode; onClo
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
       className="md:hidden fixed inset-0 z-30 overflow-y-auto p-4 pt-20 bg-base-100"
     >
-      <button onClick={onClose} className="absolute top-4 right-4 btn btn-ghost btn-sm btn-circle">
-        <X size={18} />
+      <button onClick={onClose} className="absolute top-4 right-4 btn btn-ghost btn-sm btn-circle" aria-label="Close panel">
+        <X size={20} aria-hidden="true" />
       </button>
       {children}
     </motion.div>

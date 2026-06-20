@@ -84,8 +84,7 @@ export function monthlyRateKg(state: HabitState): number {
 
 export function projectTrajectory(
   state: HabitState,
-  horizonMonths: number = DEFAULT_HORIZON_MONTHS,
-  _momentum: number = 0
+  horizonMonths: number = DEFAULT_HORIZON_MONTHS
 ): Trajectory {
   const points: TrajectoryPoint[] = [];
   let cumulative = 0;
@@ -159,7 +158,7 @@ export function forkTrajectory(
 
 export function deepMerge<T>(target: T, source: Partial<T>): T {
   if (!source) return target;
-  const isObject = (obj: any) => obj && typeof obj === 'object' && !Array.isArray(obj);
+  const isObject = (obj: unknown) => obj && typeof obj === 'object' && !Array.isArray(obj);
 
   const merged = { ...target };
   
@@ -169,10 +168,10 @@ export function deepMerge<T>(target: T, source: Partial<T>): T {
     if (isObject(target[key as keyof T]) && isObject(source[key as keyof Partial<T>])) {
       merged[key as keyof T] = deepMerge(
         target[key as keyof T], 
-        source[key as keyof Partial<T>] as any
+        source[key as keyof Partial<T>] as Partial<T[keyof T]>
       );
     } else {
-      merged[key as keyof T] = source[key as keyof Partial<T>] as any;
+      merged[key as keyof T] = source[key as keyof Partial<T>] as unknown as T[keyof T];
     }
   }
 

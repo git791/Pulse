@@ -327,14 +327,14 @@ const PhotoCapture: FC<PhotoCaptureProps> = ({ onLog }) => {
                 </span>
 
                 <div className="flex gap-1">
-                  <button onClick={() => toggleEdit(item.id)} className="btn btn-ghost btn-circle btn-sm">
-                    <Pencil size={14} />
+                  <button onClick={() => toggleEdit(item.id)} className="btn btn-ghost btn-circle btn-sm" aria-label="Edit event">
+                    <Pencil size={14} aria-hidden="true" />
                   </button>
-                  <button onClick={() => confirmEvent(item)} className="btn btn-ghost btn-circle btn-sm text-primary">
-                    <Check size={14} />
+                  <button onClick={() => confirmEvent(item)} className="btn btn-ghost btn-circle btn-sm text-primary" aria-label="Confirm event">
+                    <Check size={14} aria-hidden="true" />
                   </button>
-                  <button onClick={() => discardEvent(item.id)} className="btn btn-ghost btn-circle btn-sm text-error">
-                    <Trash2 size={14} />
+                  <button onClick={() => discardEvent(item.id)} className="btn btn-ghost btn-circle btn-sm text-error" aria-label="Discard event">
+                    <Trash2 size={14} aria-hidden="true" />
                   </button>
                 </div>
               </div>
