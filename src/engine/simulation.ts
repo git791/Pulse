@@ -158,6 +158,7 @@ export function forkTrajectory(
 // ─── Utilities ──────────────────────────────────────────────────────────────
 
 export function deepMerge<T>(target: T, source: Partial<T>): T {
+  if (!source) return target;
   const isObject = (obj: any) => obj && typeof obj === 'object' && !Array.isArray(obj);
 
   const merged = { ...target };

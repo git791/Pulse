@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,8 +12,16 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
+app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: '10mb' })); // Large limit for base64 images
+
+const extractLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // ============================================
 // API Routes — Gemini Multimodal Extraction
@@ -28,12 +38,20 @@ app.use(express.json({ limit: '10mb' })); // Large limit for base64 images
  * 
  * Returns: { events: ActivityEvent[] }
  */
-app.post('/api/extract', async (req, res) => {
+app.post('/api/extract', extractLimiter, async (req, res) => {
   try {
     const { type, data } = req.body;
 
     if (!type || !data) {
       return res.status(400).json({ error: 'Missing type or data in request body' });
+    }
+
+    if (type !== 'photo' && type !== 'voice') {
+      return res.status(400).json({ error: 'Invalid type. Must be "photo" or "voice"' });
+    }
+
+    if (typeof data !== 'string' || data.length === 0) {
+      return res.status(400).json({ error: 'Invalid data. Must be a non-empty string' });
     }
 
     const apiKey = process.env.GEMINI_API_KEY;

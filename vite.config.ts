@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -20,5 +21,19 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ['three'],
+          reactThree: ['@react-three/fiber', '@react-three/drei'],
+          vendor: ['react', 'react-dom', 'zustand', 'framer-motion']
+        }
+      }
+    }
   },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
+    globals: true
+  }
 })

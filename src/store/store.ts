@@ -242,6 +242,7 @@ export const usePulseStore = create<PulseState>()(
  * Handles nested objects like commute, diet, energy, consumption.
  */
 function deepMergeHabit(target: HabitState, source: Partial<HabitState>): HabitState {
+  if (!source) return target;
   const result = { ...target };
 
   if (source.commute) {
